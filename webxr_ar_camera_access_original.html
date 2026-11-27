@@ -27,6 +27,8 @@
 
 		import * as THREE from 'three';
 		import { ARButton } from 'three/addons/webxr/ARButton.js';
+		import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
+		import { MTLLoader } from 'three/addons/loaders/MTLLoader.js';
 
 		const clock = new THREE.Clock();
 
@@ -63,11 +65,11 @@
 
 			//
 
-			const boxGeometry = new THREE.BoxGeometry(1, 1, 1);
-			const boxMaterial = new THREE.MeshStandardMaterial();
-			cube = new THREE.Mesh(boxGeometry, boxMaterial);
-			cube.position.z = - 3;
-			scene.add(cube);
+			//const boxGeometry = new THREE.BoxGeometry(1, 1, 1);
+			//const boxMaterial = new THREE.MeshStandardMaterial();
+			//cube = new THREE.Mesh(boxGeometry, boxMaterial);
+			//cube.position.z = - 3;
+			//scene.add(cube);
 
 			//
 
