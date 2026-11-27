@@ -61,8 +61,8 @@
 			document.body.appendChild(ARButton.createButton(renderer));
 
 			//
-			const loader = new GLTFLoader();
-			const geometry = loader.load('assets/taza.glb');
+			const geometry = new GLTFLoader().loadAsync("assets/taza.glb");
+			//const geometry = loader.load('assets/taza.glb');
 			//const geometry = new THREE.CylinderGeometry(0, 0.05, 0.2, 32).rotateX(Math.PI / 2);
 
 			function onSelect() {
