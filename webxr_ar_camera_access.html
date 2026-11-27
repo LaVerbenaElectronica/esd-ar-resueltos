@@ -52,34 +52,6 @@
 			);
 
 			// --------------------------------
-			// LIGHTING
-			// --------------------------------
-
-			const hemisphereLight = new THREE.HemisphereLight(
-				0xffffff,
-				0x888888,
-				2.0
-			);
-			scene.add(hemisphereLight);
-
-			const ambientLight = new THREE.AmbientLight(
-				0xffffff,
-				1.2
-			);
-			scene.add(ambientLight);
-
-			const directionalLight = new THREE.DirectionalLight(
-				0xffffff,
-				3.0
-			);
-
-			directionalLight.position.set(1, 2, 1);
-			directionalLight.target.position.set(0, 0, -0.65);
-
-			scene.add(directionalLight);
-			scene.add(directionalLight.target);
-
-			// --------------------------------
 			// RENDERER
 			// --------------------------------
 
@@ -130,46 +102,36 @@
 				'assets/rubik.obj'
 			);
 
+
 			// --------------------------------
-			// IMPROVE MATERIALS
+			// LIGHTING
 			// --------------------------------
 
-			model.traverse(function (child) {
+			const hemisphereLight = new THREE.HemisphereLight(
+				0xffffff,
+				0x888888,
+				2.0
+			);
+			scene.add(hemisphereLight);
 
-				if (child.isMesh) {
+			const ambientLight = new THREE.AmbientLight(
+				0xffffff,
+				1.2
+			);
+			scene.add(ambientLight);
 
-					const mats = Array.isArray(child.material)
-						? child.material
-						: [child.material];
+			const directionalLight = new THREE.DirectionalLight(
+				0xffffff,
+				3.0
+			);
 
-					mats.forEach(function (mat) {
+			directionalLight.position.set(1, 2, 1);
+			directionalLight.target.position.set(0, 0, -0.65);
 
-						if (mat.color) {
-							// Preserve original Rubik colours
-							// but prevent excessively dark colours.
-							mat.color.r = Math.max(mat.color.r, 0.25);
-							mat.color.g = Math.max(mat.color.g, 0.25);
-							mat.color.b = Math.max(mat.color.b, 0.25);
-						}
+			scene.add(directionalLight);
+			scene.add(directionalLight.target);
 
-						if (mat.isMeshPhongMaterial) {
-							mat.shininess = 60;
-						}
 
-						if (mat.isMeshStandardMaterial) {
-							mat.roughness = 0.5;
-							mat.metalness = 0;
-						}
-
-						mat.needsUpdate = true;
-
-					});
-
-					child.castShadow = false;
-					child.receiveShadow = false;
-				}
-
-			});
 
 			// --------------------------------
 			// REDUCE OBJECT SIZE
