@@ -111,23 +111,13 @@
 			// LIGHTING
 			// --------------------------------
 
-			const hemisphereLight = new THREE.HemisphereLight(
-				0xffffff,
-				0x888888,
-				2.0
-			);
+			const hemisphereLight = new THREE.HemisphereLight(0xffffff, 0x888888, 2.0);
 			scene.add(hemisphereLight);
 
-			const ambientLight = new THREE.AmbientLight(
-				0xffffff,
-				1.2
-			);
+			const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
 			scene.add(ambientLight);
 
-			const directionalLight = new THREE.DirectionalLight(
-				0xffffff,
-				3.0
-			);
+			const directionalLight = new THREE.DirectionalLight(0xffffff, 3.0);
 
 			directionalLight.position.set(1, 2, 1);
 			directionalLight.target.position.set(0, 0, -0.65);

@@ -70,9 +70,19 @@
 			// LIGHTING
 			// --------------------------------
 
-			const defaultLight = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 3);
-			defaultLight.position.set(0.5, 1, 0.25);
-			scene.add(defaultLight);
+			const hemisphereLight = new THREE.HemisphereLight(0xffffff, 0x888888, 2.0);
+			scene.add(hemisphereLight);
+
+			const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
+			scene.add(ambientLight);
+
+			const directionalLight = new THREE.DirectionalLight(0xffffff, 3.0);
+
+			directionalLight.position.set(1, 2, 1);
+			directionalLight.target.position.set(0, 0, -0.65);
+
+			scene.add(directionalLight);
+			scene.add(directionalLight.target);
 
 
 			// --------------------------------
