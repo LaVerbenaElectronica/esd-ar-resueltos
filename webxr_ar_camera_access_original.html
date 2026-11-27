@@ -39,6 +39,10 @@
 
 		async function init() {
 
+			// --------------------------------
+			// CONTAINER, CAMERA, SCENE
+			// --------------------------------
+
 			const container = document.createElement('div');
 			document.body.appendChild(container);
 
@@ -46,11 +50,9 @@
 
 			camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, 20);
 
-			const defaultLight = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 3);
-			defaultLight.position.set(0.5, 1, 0.25);
-			scene.add(defaultLight);
-
-			//
+			// --------------------------------
+			// RENDERER
+			// --------------------------------
 
 			renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 			renderer.setPixelRatio(window.devicePixelRatio);
@@ -59,20 +61,34 @@
 			renderer.xr.enabled = true;
 			container.appendChild(renderer.domElement);
 
-			//
+			// --------------------------------
+			// LIGHTING
+			// --------------------------------
+
+			const defaultLight = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 3);
+			defaultLight.position.set(0.5, 1, 0.25);
+			scene.add(defaultLight);
+
+
+			// --------------------------------
+			// AR BUTTON
+			// --------------------------------
 
 			document.body.appendChild(ARButton.createButton(renderer, { requiredFeatures: ['camera-access'] }));
 
-			//
+			// --------------------------------
+			// LOAD RUBIK OBJECT
+			// --------------------------------
 
-			//const boxGeometry = new THREE.BoxGeometry(1, 1, 1);
-			//const boxMaterial = new THREE.MeshStandardMaterial();
-			//cube = new THREE.Mesh(boxGeometry, boxMaterial);
-			//cube.position.z = - 3;
-			//scene.add(cube);
+			const boxGeometry = new THREE.BoxGeometry(1, 1, 1);
+			const boxMaterial = new THREE.MeshStandardMaterial();
+			cube = new THREE.Mesh(boxGeometry, boxMaterial);
+			cube.position.z = - 3;
+			scene.add(cube);
 
-			//
-
+			// --------------------------------
+			// RESIZE
+			// --------------------------------
 
 			window.addEventListener('resize', onWindowResize);
 
@@ -87,42 +103,9 @@
 
 		}
 
-		//
-
-		function setCameraTexture() {
-
-			if (!renderer.xr.getSession()) {
-
-				if (cube.material.map) {
-
-					cube.material.map = null;
-					cube.material.needsUpdate = true;
-
-				}
-
-				return;
-
-			}
-
-			const frame = renderer.xr.getFrame();
-			const referenceSpace = renderer.xr.getReferenceSpace();
-
-			if (!frame || !referenceSpace) return;
-
-			const viewerPose = frame.getViewerPose(referenceSpace);
-
-			if (!viewerPose) return;
-
-			const view = viewerPose.views.find(view => view.camera);
-
-			const cameraTexture = renderer.xr.getCameraTexture(view.camera);
-
-			if (cube.material.map === cameraTexture) return;
-
-			cube.material.map = cameraTexture;
-			cube.material.needsUpdate = true;
-
-		}
+		// --------------------------------
+		// ANIMATION
+		// --------------------------------
 
 		function animate() {
 
