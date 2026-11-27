@@ -137,9 +137,10 @@
 
 			//setCameraTexture();
 
-			cube.rotation.x += delta;
-			cube.rotation.y += delta;
-
+			if (cube) {
+				cube.rotation.x += delta;
+				cube.rotation.y += delta;
+			}
 			renderer.render(scene, camera);
 
 		}
