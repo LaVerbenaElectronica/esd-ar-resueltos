@@ -104,41 +104,6 @@
 
 		//
 
-		function setCameraTexture() {
-
-			if (!renderer.xr.getSession()) {
-
-				if (model.material.map) {
-
-					model.material.map = null;
-					model.material.needsUpdate = true;
-
-				}
-
-				return;
-
-			}
-
-			const frame = renderer.xr.getFrame();
-			const referenceSpace = renderer.xr.getReferenceSpace();
-
-			if (!frame || !referenceSpace) return;
-
-			const viewerPose = frame.getViewerPose(referenceSpace);
-
-			if (!viewerPose) return;
-
-			const view = viewerPose.views.find(view => view.camera);
-
-			const cameraTexture = renderer.xr.getCameraTexture(view.camera);
-
-			if (model.material.map === cameraTexture) return;
-
-			model.material.map = cameraTexture;
-			model.material.needsUpdate = true;
-
-		}
-
 		function animate() {
 
 			const delta = clock.getDelta();
