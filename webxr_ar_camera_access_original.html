@@ -94,26 +94,49 @@
 			// --------------------------------
 			// LOAD RUBIK OBJECT
 			// --------------------------------
+			try {
+				const objLoader = new OBJLoader();
+				const mtlLoader = new MTLLoader();
 
-			const objLoader = new OBJLoader();
-			const mtlLoader = new MTLLoader();
+				const materials = await mtlLoader.loadAsync(
+					'assets/rubik.mtl'
+				);
 
-			const materials = await mtlLoader.loadAsync(
-				'assets/rubik.mtl'
-			);
+				materials.preload();
 
-			materials.preload();
+				objLoader.setMaterials(materials);
 
-			objLoader.setMaterials(materials);
+				cube = await objLoader.loadAsync(
+					'assets/rubik.obj'
+				);
 
-			cube = await objLoader.loadAsync(
-				'assets/rubik.obj'
-			);
+			} catch (error) {
+				console.error("Error loading Rubik model:", error);
+			}
 
-			scene.add(cube);
+
+
 			// --------------------------------
 			// RESIZE
 			// --------------------------------
+
+			box.getSize(size);
+			box.getCenter(center);
+
+			// Scale to a maximum dimension of 12 cm
+			const maxDimension = Math.max(size.x, size.y, size.z);
+			const scaleFactor = 0.12 / maxDimension;
+
+			cube.scale.setScalar(scaleFactor);
+
+			// Centre the model and position it in front of camera
+			cube.position.set(
+				-center.x * scaleFactor,
+				-center.y * scaleFactor,
+				-center.z * scaleFactor - 0.65
+			);
+
+			scene.add(cube);
 
 			window.addEventListener('resize', onWindowResize);
 
