@@ -26,7 +26,10 @@
 	<script type="module">
 
 		import * as THREE from 'three';
-		import {ARButton} from 'three/addons/webxr/ARButton.js';
+		import { ARButton } from 'three/addons/webxr/ARButton.js';
+		import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
+		import { MTLLoader } from 'three/addons/loaders/MTLLoader.js';
+
 
 		const clock = new THREE.Clock();
 
@@ -50,7 +53,7 @@
 
 			//
 
-			renderer = new THREE.WebGLRenderer({antialias: true, alpha: true});
+			renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 			renderer.setPixelRatio(window.devicePixelRatio);
 			renderer.setSize(window.innerWidth, window.innerHeight);
 			renderer.setAnimationLoop(animate);
@@ -59,15 +62,29 @@
 
 			//
 
-			document.body.appendChild(ARButton.createButton(renderer, {requiredFeatures: ['camera-access']}));
+			document.body.appendChild(ARButton.createButton(renderer, { requiredFeatures: ['camera-access'] }));
 
 			//
 
-			const boxGeometry = new THREE.BoxGeometry( 1, 1, 1 );
-			const boxMaterial = new THREE.MeshStandardMaterial();
-			cube = new THREE.Mesh( boxGeometry, boxMaterial );
-			cube.position.z = - 3;
-			scene.add( cube );
+			//const boxGeometry = new THREE.BoxGeometry( 1, 1, 1 );
+			//const boxMaterial = new THREE.MeshStandardMaterial();
+			//cube = new THREE.Mesh( boxGeometry, boxMaterial );
+			//cube.position.z = - 3;
+			//scene.add( cube );
+
+			//Cargamos los dos plugins para obj y mtl
+			const objLoader = new OBJLoader();
+			const mtlLoader = new MTLLoader();
+			//incorporamos los materiales
+			const materials = await mtlLoader.loadAsync('assets/rubik.mtl');
+			//Los materiales se incorporan al loader del obj
+			objLoader.setMaterials(materials);
+			//DESPUES se carga el obj en la variable del proyecto, ahora con materiales
+			model = await objLoader.loadAsync('assets/rubik.obj');
+			//El objeto se añade a la escena
+			scene.add(model);
+
+
 
 			//
 
