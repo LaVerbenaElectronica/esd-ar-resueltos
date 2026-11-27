@@ -85,11 +85,20 @@
 			// LOAD RUBIK OBJECT
 			// --------------------------------
 
-			const boxGeometry = new THREE.BoxGeometry(1, 1, 1);
-			const boxMaterial = new THREE.MeshStandardMaterial();
-			cube = new THREE.Mesh(boxGeometry, boxMaterial);
-			cube.position.z = - 3;
-			scene.add(cube);
+			const objLoader = new OBJLoader();
+			const mtlLoader = new MTLLoader();
+
+			const materials = await mtlLoader.loadAsync(
+				'assets/rubik.mtl'
+			);
+
+			materials.preload();
+
+			objLoader.setMaterials(materials);
+
+			cube = await objLoader.loadAsync(
+				'assets/rubik.obj'
+			);
 
 			// --------------------------------
 			// RESIZE
