@@ -110,8 +110,10 @@
 
 			//setCameraTexture();
 
-			//model.rotation.x += delta;
-			//model.rotation.y += delta;
+			if (model) {
+				model.rotation.x += delta;
+				model.rotation.y += delta;
+			}
 
 			renderer.render(scene, camera);
 
